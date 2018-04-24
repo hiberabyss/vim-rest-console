@@ -690,8 +690,10 @@ function! s:DisplayOutput(tmpBufName, outputInfo, config)
     endif
   endif
 
-  silent execute(":g/Content-Type:/normal dap")
-  silent call s:CreateHeaderBuf(@")
+  if includeResponseHeader
+      silent execute(":g/Content-Type:/normal dap")
+      silent call s:CreateHeaderBuf(@")
+  endif
 
   if getline(1) =~ '^$' | 1d | endif
   """ Finalize view.

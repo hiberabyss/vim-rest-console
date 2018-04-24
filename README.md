@@ -1,3 +1,12 @@
+# Improvements this fork provide
+
+* Add a new map `gx` which could open request under cursor via default browser;
+* Only send continous request without empty line;
+* Filter `curl -i` header and save the header info into a separate buffer;
+    * Add a map `<c-n>` in response buffer which could switch between response buffer and header buffer.
+* Makes end of line comment highlight works;
+* Delete first empty line in response buffer.
+
 # Vim REST Console (VRC)
 
 ### 1. Introduction
