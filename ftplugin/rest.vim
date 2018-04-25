@@ -34,7 +34,8 @@ let s:deprecatedCurlOpts = {
 " @return string
 "
 function! s:StrTrim(txt)
-  return substitute(a:txt, '\v^\s*([^[:space:]].*[^[:space:]])\s*$', '\1', 'g')
+  " return substitute(a:txt, '\v^\s*([^[:space:]].*[^[:space:]])\s*$', '\1', 'g')
+  return substitute(a:txt, '\v^\s*(\S(.*\S)*)\s*$', '\1', 'g')
 endfunction
 
 """
@@ -828,7 +829,20 @@ function! VrcGetRequestPath()
       echom request.msg
   endif
 endfunction
-nnoremap <buffer> <silent> gx :silent! call system("open " .VrcGetRequestPath())<cr>
+
+function! s:AddBufferMap()
+    let open_cmd = ""
+    if has('mac')
+        let open_cmd = "open"
+    elseif has('unix') && executable('xdg-open')
+        let open_cmd = "xdg-open"
+    endif
+
+    if ! empty(open_cmd)
+        execute(printf("nnoremap <buffer> <silent> gx :silent! call system('%s ' . VrcGetRequestPath())<cr>", open_cmd))
+    endif
+endfunction
+call s:AddBufferMap()
 
 """
 " Run a request block that encloses the cursor.
