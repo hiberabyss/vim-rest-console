@@ -577,6 +577,7 @@ let g:vrc_header_buffer_name = "__REST_header__"
 function! s:CreateHeaderBuf(headerStr)
     execute(":e " . g:vrc_header_buffer_name)
     setl buftype=nofile
+    setl nobuflisted
     execute(":%d")
     call setline(1, split(a:headerStr, '\v\n'))
     let responseBufName = s:GetOpt('vrc_output_buffer_name', '__REST_response__')
@@ -613,6 +614,7 @@ function! s:DisplayOutput(tmpBufName, outputInfo, config)
     """ Create view if not loadded or hidden.
     execute 'rightbelow ' . cmdSplit . ' ' . a:tmpBufName
     setlocal buftype=nofile
+    setlocal nobuflisted
   else
     """ View already shown, switch to it.
     execute outputWin . 'wincmd w'
